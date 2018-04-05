@@ -11,10 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -23,6 +27,9 @@ import javafx.scene.control.TextField;
  * @author DAW
  */
 public class FXMLDocumentController implements Initializable {
+
+    //Usado para rellenar el contenido del checkBox cb_estadoCivil
+    private ObservableList<String> estadoList = FXCollections.observableArrayList("Soltero", "Casado", "Divorciado", "Viudo");
 
     private ResultSet rs;
 
@@ -39,12 +46,6 @@ public class FXMLDocumentController implements Initializable {
     private TextField tf_cargo;
 
     @FXML
-    private TextField tf_fechaNacimiento;
-
-    @FXML
-    private TextField tf_fechaContrato;
-
-    @FXML
     private TextField tf_telefono;
 
     @FXML
@@ -56,26 +57,50 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button bt_first;
 
+    @FXML
+    private DatePicker dp_fechaNacimiento;
+    @FXML
+    private DatePicker dp_fechaContrato;
+    @FXML
+    private ComboBox cb_estadoCivil;
+    @FXML
+    private TextField tf_jefe;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //usado para rellenar el checkBox cb_estadoCivil
+        cb_estadoCivil.setItems(estadoList);
+        //valor inicial del checkBox cb_estadoCivil
+        cb_estadoCivil.setValue("Casado");
+
         Conexion conexion = new Conexion();
         Connection con = conexion.conectar();
-        PreparedStatement stmt = null;
+        PreparedStatement stmt;
+        PreparedStatement stmt2;
 
         try {
 
-            stmt = con.prepareStatement("SELECT * from Empleados");
+            stmt = con.prepareStatement("SELECT e.IdEmpleado,e.Apellidos,e.Nombre,e.Cargo,e.FNacimiento,e.FContrato,e.Telefono,ea.Nombre as nombreJefe,ea.Apellidos as apellidoJefe from Empleados e left JOIN empleados ea on ea.IdEmpleado=e.Jefe");
             rs = stmt.executeQuery();
             rs.first();
+            
             tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
             tf_cargo.setText(rs.getString("cargo"));
-            tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-            tf_fechaContrato.setText(rs.getString("fContrato"));
+            //para mostrar en el datePicker
+            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
+            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
+
+            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
+            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
 
+            
+            tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
+            
+            buttons();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -86,35 +111,52 @@ public class FXMLDocumentController implements Initializable {
         if (rs.isLast()) {
             bt_ultimo.setDisable(true);
             bt_next.setDisable(true);
+            bt_first.setDisable(false);
+            bt_previous.setDisable(false);
+        }
+        if (!rs.isLast() && !rs.isFirst()) {
+            bt_ultimo.setDisable(false);
+            bt_next.setDisable(false);
+            bt_first.setDisable(false);
+            bt_previous.setDisable(false);
         }
         if (rs.isFirst()) {
+            bt_ultimo.setDisable(false);
+            bt_next.setDisable(false);
             bt_first.setDisable(true);
             bt_previous.setDisable(true);
         }
-
     }
 
     @FXML
     private void nextRegistry() throws SQLException {
-        
 
         try {
             this.rs.next();
+           
             tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
             tf_cargo.setText(rs.getString("cargo"));
-            tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-            tf_fechaContrato.setText(rs.getString("fContrato"));
+            //para mostrar en el datePicker
+            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
+            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
+
+            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
+            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
+
+           tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        //comprobacion de botones
         buttons();
     }
 
     @FXML
-    private void previousRegistry() throws SQLException{
+    private void previousRegistry() throws SQLException {
 
         try {
             this.rs.previous();
@@ -122,9 +164,14 @@ public class FXMLDocumentController implements Initializable {
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
             tf_cargo.setText(rs.getString("cargo"));
-            tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-            tf_fechaContrato.setText(rs.getString("fContrato"));
+            //para mostrar en el datePicker
+            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
+            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
+
+            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
+            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
+tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -132,7 +179,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void firstRegistry() throws SQLException{
+    private void firstRegistry() throws SQLException {
 
         try {
             this.rs.first();
@@ -140,9 +187,14 @@ public class FXMLDocumentController implements Initializable {
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
             tf_cargo.setText(rs.getString("cargo"));
-            tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-            tf_fechaContrato.setText(rs.getString("fContrato"));
+            //para mostrar en el datePicker
+            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
+            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
+
+            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
+            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
+tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -150,7 +202,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void lastRegistry()throws SQLException {
+    private void lastRegistry() throws SQLException {
 
         try {
             this.rs.last();
@@ -158,9 +210,14 @@ public class FXMLDocumentController implements Initializable {
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
             tf_cargo.setText(rs.getString("cargo"));
-            tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-            tf_fechaContrato.setText(rs.getString("fContrato"));
+            //para mostrar en el datePicker
+            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
+            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
+
+            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
+            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
+tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
