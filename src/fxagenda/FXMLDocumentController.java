@@ -49,7 +49,7 @@ public class FXMLDocumentController implements Initializable {
     private TextField tf_telefono;
 
     @FXML
-    private Button bt_ultimo;
+    private Button bt_last;
     @FXML
     private Button bt_next;
     @FXML
@@ -116,20 +116,21 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void buttons() throws SQLException {
+        //definicion de estado de los botones
         if (rs.isLast()) {
-            bt_ultimo.setDisable(true);
+            bt_last.setDisable(true);
             bt_next.setDisable(true);
             bt_first.setDisable(false);
             bt_previous.setDisable(false);
         }
         if (!rs.isLast() && !rs.isFirst()) {
-            bt_ultimo.setDisable(false);
+            bt_last.setDisable(false);
             bt_next.setDisable(false);
             bt_first.setDisable(false);
             bt_previous.setDisable(false);
         }
         if (rs.isFirst()) {
-            bt_ultimo.setDisable(false);
+            bt_last.setDisable(false);
             bt_next.setDisable(false);
             bt_first.setDisable(true);
             bt_previous.setDisable(true);
@@ -148,15 +149,13 @@ public class FXMLDocumentController implements Initializable {
             tf_cargo.setText(rs.getString("cargo"));
             //para mostrar en el datePicker
             dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
 
             String nombreJefe = rs.getString("nombreJefe");
             String apellidoJefe = rs.getString("apellidoJefe");
 
+            //comprobacion del nombre del jefe vacío
             if (nombreJefe == null) {
                 nombreJefe = "";
             }
@@ -164,7 +163,7 @@ public class FXMLDocumentController implements Initializable {
                 apellidoJefe = "";
             }
             tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -183,12 +182,9 @@ public class FXMLDocumentController implements Initializable {
             tf_cargo.setText(rs.getString("cargo"));
             //para mostrar en el datePicker
             dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
-            
+
             String nombreJefe = rs.getString("nombreJefe");
             String apellidoJefe = rs.getString("apellidoJefe");
 
@@ -199,7 +195,7 @@ public class FXMLDocumentController implements Initializable {
                 apellidoJefe = "";
             }
             tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -217,12 +213,10 @@ public class FXMLDocumentController implements Initializable {
             tf_cargo.setText(rs.getString("cargo"));
             //para mostrar en el datePicker
             dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
-           String nombreJefe = rs.getString("nombreJefe");
+
+            String nombreJefe = rs.getString("nombreJefe");
             String apellidoJefe = rs.getString("apellidoJefe");
 
             if (nombreJefe == null) {
@@ -232,7 +226,7 @@ public class FXMLDocumentController implements Initializable {
                 apellidoJefe = "";
             }
             tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -250,11 +244,9 @@ public class FXMLDocumentController implements Initializable {
             tf_cargo.setText(rs.getString("cargo"));
             //para mostrar en el datePicker
             dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
+            
             String nombreJefe = rs.getString("nombreJefe");
             String apellidoJefe = rs.getString("apellidoJefe");
 
@@ -265,7 +257,7 @@ public class FXMLDocumentController implements Initializable {
                 apellidoJefe = "";
             }
             tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
