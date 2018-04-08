@@ -77,14 +77,13 @@ public class FXMLDocumentController implements Initializable {
         Conexion conexion = new Conexion();
         Connection con = conexion.conectar();
         PreparedStatement stmt;
-        PreparedStatement stmt2;
 
         try {
 
             stmt = con.prepareStatement("SELECT e.IdEmpleado,e.Apellidos,e.Nombre,e.Cargo,e.FNacimiento,e.FContrato,e.Telefono,ea.Nombre as nombreJefe,ea.Apellidos as apellidoJefe from Empleados e left JOIN empleados ea on ea.IdEmpleado=e.Jefe");
             rs = stmt.executeQuery();
             rs.first();
-            
+
             tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
@@ -97,9 +96,18 @@ public class FXMLDocumentController implements Initializable {
             //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
 
-            
-            tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
-            
+            String nombreJefe = rs.getString("nombreJefe");
+            String apellidoJefe = rs.getString("apellidoJefe");
+
+            if (nombreJefe == null) {
+                nombreJefe = "";
+            }
+            if (apellidoJefe == null) {
+                apellidoJefe = "";
+            }
+
+            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
+
             buttons();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -133,7 +141,7 @@ public class FXMLDocumentController implements Initializable {
 
         try {
             this.rs.next();
-           
+
             tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
@@ -146,8 +154,17 @@ public class FXMLDocumentController implements Initializable {
             //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
 
-           tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
+            String nombreJefe = rs.getString("nombreJefe");
+            String apellidoJefe = rs.getString("apellidoJefe");
 
+            if (nombreJefe == null) {
+                nombreJefe = "";
+            }
+            if (apellidoJefe == null) {
+                apellidoJefe = "";
+            }
+            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -171,7 +188,18 @@ public class FXMLDocumentController implements Initializable {
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
             //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
-tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
+            
+            String nombreJefe = rs.getString("nombreJefe");
+            String apellidoJefe = rs.getString("apellidoJefe");
+
+            if (nombreJefe == null) {
+                nombreJefe = "";
+            }
+            if (apellidoJefe == null) {
+                apellidoJefe = "";
+            }
+            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -194,7 +222,17 @@ tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"))
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
             //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
-tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
+           String nombreJefe = rs.getString("nombreJefe");
+            String apellidoJefe = rs.getString("apellidoJefe");
+
+            if (nombreJefe == null) {
+                nombreJefe = "";
+            }
+            if (apellidoJefe == null) {
+                apellidoJefe = "";
+            }
+            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -217,7 +255,17 @@ tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"))
             dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
             //*********tf_fechaContrato.setText(rs.getString("fContrato"));
             tf_telefono.setText(rs.getString("telefono"));
-tf_jefe.setText(rs.getString("nombreJefe") + " " + rs.getString("apellidoJefe"));
+            String nombreJefe = rs.getString("nombreJefe");
+            String apellidoJefe = rs.getString("apellidoJefe");
+
+            if (nombreJefe == null) {
+                nombreJefe = "";
+            }
+            if (apellidoJefe == null) {
+                apellidoJefe = "";
+            }
+            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

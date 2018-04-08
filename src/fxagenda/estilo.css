@@ -8,12 +8,49 @@ and open the template in the editor.
     Author     : DAW
 */
 
-.principal{
-    -fx-background-color: #ccccff;
-    
+.titulo{
+    -fx-font-family:"Ebrima";
+    -fx-font-weight:bold;
+    -fx-font-color: #ccccff;
+    -fx-font-size:28;
+    -fx-alignment:CENTER;
 }
 
 .boton{
-    -fx-font-family:"Lucida Console";
-    -fx-border-color: #ff6633;
+    -fx-font-family:"Ebrima";
+    -fx-border-color: #3d5afe;
+    -fx-background-color:#80deea ;
+    -fx-border-radius:18;
+    -fx-background-radius:18;
+    -fx-border-width:1.5;
+}
+.boton:hover{
+    -fx-font-family:"Ebrima";
+    -fx-font-weight:bold;
+    -fx-border-color: #ffa726;
+    -fx-background-color:#fff9c4 ;
+    -fx-border-radius:18;
+    -fx-background-radius:18;
+    -fx-border-width:3;
+}
+.boton:pressed{
+    -fx-font-family:"Ebrima";
+    -fx-font-weight:bold;
+    -fx-border-color: #455a64 ;
+    -fx-background-color:#e0e0e0 ;
+    -fx-border-radius:18;
+    -fx-background-radius:18;
+    -fx-border-width:3;
+}
+
+.fondoAzul{
+    -fx-background-color:#e8eaf6;
+     -fx-background-radius:8;
+}
+.fondoRosa{
+    -fx-background-color:#fce4ec;
+    -fx-background-radius:8;
+}
+.textoCentrado{
+    -fx-alignment: center;
 }
