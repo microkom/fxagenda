@@ -30,7 +30,7 @@
       <TextField fx:id="tf_cargo" alignment="CENTER" layoutX="164.0" layoutY="276.0" prefHeight="22.0" prefWidth="150.0" />
       <TextField fx:id="tf_telefono" alignment="CENTER" layoutX="164.0" layoutY="172.0" prefHeight="22.0" prefWidth="150.0" />
       <TextField fx:id="tf_apellidos" alignment="CENTER" layoutX="164.0" layoutY="120.0" prefHeight="22.0" prefWidth="150.0" />
-      <Button fx:id="bt_ultimo" layoutX="251.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#lastRegistry" prefHeight="28.0" prefWidth="66.0" styleClass="boton" stylesheets="@estilo.css" text="Último" />
+      <Button fx:id="bt_last" layoutX="251.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#lastRegistry" prefHeight="28.0" prefWidth="66.0" styleClass="boton" stylesheets="@estilo.css" text="Último" />
       <Button fx:id="bt_next" layoutX="170.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#nextRegistry" prefHeight="22.0" prefWidth="75.0" styleClass="boton" stylesheets="@estilo.css" text="Siguiente" />
       <Button fx:id="bt_previous" layoutX="96.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#previousRegistry" prefHeight="22.0" prefWidth="66.0" styleClass="boton" stylesheets="@estilo.css" text="Anterior">
          <font>
