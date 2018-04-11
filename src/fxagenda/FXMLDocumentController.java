@@ -19,8 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  *
@@ -65,6 +67,8 @@ public class FXMLDocumentController implements Initializable {
     private ComboBox cb_estadoCivil;
     @FXML
     private TextField tf_jefe;
+    @FXML
+    private Hyperlink id_salir;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -83,66 +87,43 @@ public class FXMLDocumentController implements Initializable {
             stmt = con.prepareStatement("SELECT e.IdEmpleado,e.Apellidos,e.Nombre,e.Cargo,e.FNacimiento,e.FContrato,e.Telefono,ea.Nombre as nombreJefe,ea.Apellidos as apellidoJefe from Empleados e left JOIN empleados ea on ea.IdEmpleado=e.Jefe");
             rs = stmt.executeQuery();
             rs.first();
+            fillOutForm();
 
-            tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
-            tf_apellidos.setText(rs.getString("apellidos"));
-            tf_nombre.setText(rs.getString("nombre"));
-            tf_cargo.setText(rs.getString("cargo"));
-            //para mostrar en el datePicker
-            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            //*********tf_fechaNacimiento.setText(rs.getString("fNacimiento"));
-
-            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            //*********tf_fechaContrato.setText(rs.getString("fContrato"));
-            tf_telefono.setText(rs.getString("telefono"));
-
-            String nombreJefe = rs.getString("nombreJefe");
-            String apellidoJefe = rs.getString("apellidoJefe");
-
-            if (nombreJefe == null) {
-                nombreJefe = "";
-            }
-            if (apellidoJefe == null) {
-                apellidoJefe = "";
-            }
-
-            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-
-            buttons();
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
 
     }
 
-    private void buttons() throws SQLException {
+    private void buttons() {
         //definicion de estado de los botones
-        if (rs.isLast()) {
-            bt_last.setDisable(true);
-            bt_next.setDisable(true);
-            bt_first.setDisable(false);
-            bt_previous.setDisable(false);
+        try {
+            if (rs.isLast()) {
+                bt_last.setDisable(true);
+                bt_next.setDisable(true);
+                bt_first.setDisable(false);
+                bt_previous.setDisable(false);
+            }
+            if (!rs.isLast() && !rs.isFirst()) {
+                bt_last.setDisable(false);
+                bt_next.setDisable(false);
+                bt_first.setDisable(false);
+                bt_previous.setDisable(false);
+            }
+            if (rs.isFirst()) {
+                bt_last.setDisable(false);
+                bt_next.setDisable(false);
+                bt_first.setDisable(true);
+                bt_previous.setDisable(true);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
-        if (!rs.isLast() && !rs.isFirst()) {
-            bt_last.setDisable(false);
-            bt_next.setDisable(false);
-            bt_first.setDisable(false);
-            bt_previous.setDisable(false);
-        }
-        if (rs.isFirst()) {
-            bt_last.setDisable(false);
-            bt_next.setDisable(false);
-            bt_first.setDisable(true);
-            bt_previous.setDisable(true);
-        }
+
     }
 
-    @FXML
-    private void nextRegistry() throws SQLException {
-
+    private void fillOutForm() {
         try {
-            this.rs.next();
-
             tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
             tf_apellidos.setText(rs.getString("apellidos"));
             tf_nombre.setText(rs.getString("nombre"));
@@ -155,16 +136,30 @@ public class FXMLDocumentController implements Initializable {
             String nombreJefe = rs.getString("nombreJefe");
             String apellidoJefe = rs.getString("apellidoJefe");
 
-            //comprobacion del nombre del jefe vacío
             if (nombreJefe == null) {
                 nombreJefe = "";
             }
             if (apellidoJefe == null) {
                 apellidoJefe = "";
             }
-            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
 
-        } catch (Exception ex) {
+            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        //Comprobación de botones activos
+        buttons();
+    }
+
+    @FXML
+    private void nextRegistry() {
+
+        try {
+            this.rs.next();
+
+            fillOutForm();
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         //comprobacion de botones
@@ -172,97 +167,51 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void previousRegistry() throws SQLException {
+    private void previousRegistry() {
 
         try {
             this.rs.previous();
-            tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
-            tf_apellidos.setText(rs.getString("apellidos"));
-            tf_nombre.setText(rs.getString("nombre"));
-            tf_cargo.setText(rs.getString("cargo"));
-            //para mostrar en el datePicker
-            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            tf_telefono.setText(rs.getString("telefono"));
+            fillOutForm();
 
-            String nombreJefe = rs.getString("nombreJefe");
-            String apellidoJefe = rs.getString("apellidoJefe");
-
-            if (nombreJefe == null) {
-                nombreJefe = "";
-            }
-            if (apellidoJefe == null) {
-                apellidoJefe = "";
-            }
-            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        //comprobacion de botones
         buttons();
     }
 
     @FXML
-    private void firstRegistry() throws SQLException {
+    private void firstRegistry() {
 
         try {
             this.rs.first();
-            tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
-            tf_apellidos.setText(rs.getString("apellidos"));
-            tf_nombre.setText(rs.getString("nombre"));
-            tf_cargo.setText(rs.getString("cargo"));
-            //para mostrar en el datePicker
-            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            tf_telefono.setText(rs.getString("telefono"));
-
-            String nombreJefe = rs.getString("nombreJefe");
-            String apellidoJefe = rs.getString("apellidoJefe");
-
-            if (nombreJefe == null) {
-                nombreJefe = "";
-            }
-            if (apellidoJefe == null) {
-                apellidoJefe = "";
-            }
-            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-
-        } catch (Exception ex) {
+            fillOutForm();
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        //comprobacion de botones
         buttons();
     }
 
     @FXML
-    private void lastRegistry() throws SQLException {
+    private void lastRegistry() {
 
         try {
             this.rs.last();
-            tf_IdEmpleado.setText(Integer.toString(rs.getInt("IdEmpleado")));
-            tf_apellidos.setText(rs.getString("apellidos"));
-            tf_nombre.setText(rs.getString("nombre"));
-            tf_cargo.setText(rs.getString("cargo"));
-            //para mostrar en el datePicker
-            dp_fechaNacimiento.setValue(rs.getDate("fNacimiento").toLocalDate());
-            dp_fechaContrato.setValue(rs.getDate("fContrato").toLocalDate());
-            tf_telefono.setText(rs.getString("telefono"));
-            
-            String nombreJefe = rs.getString("nombreJefe");
-            String apellidoJefe = rs.getString("apellidoJefe");
+            fillOutForm();
 
-            if (nombreJefe == null) {
-                nombreJefe = "";
-            }
-            if (apellidoJefe == null) {
-                apellidoJefe = "";
-            }
-            tf_jefe.setText(nombreJefe + " " + apellidoJefe);
-
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        //comprobacion de botones
         buttons();
+    }
 
+    @FXML
+    private void salir() {
+        Stage stage = (Stage) id_salir.getScene().getWindow();
+        stage.close();
     }
 
 }
+//crear un menu que contenga las diferentes aplicaciones

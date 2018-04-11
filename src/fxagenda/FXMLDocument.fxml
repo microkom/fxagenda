@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="435.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxagenda.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="463.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxagenda.FXMLDocumentController">
    <children>
       <Pane layoutX="20.0" layoutY="87.0" prefHeight="143.0" prefWidth="323.0" styleClass="fondoAzul" stylesheets="@estilo.css" />
       <Pane layoutX="20.0" layoutY="245.0" prefHeight="115.0" prefWidth="323.0" styleClass="fondoRosa" stylesheets="@estilo.css" />
@@ -30,9 +30,9 @@
       <TextField fx:id="tf_cargo" alignment="CENTER" layoutX="164.0" layoutY="276.0" prefHeight="22.0" prefWidth="150.0" />
       <TextField fx:id="tf_telefono" alignment="CENTER" layoutX="164.0" layoutY="172.0" prefHeight="22.0" prefWidth="150.0" />
       <TextField fx:id="tf_apellidos" alignment="CENTER" layoutX="164.0" layoutY="120.0" prefHeight="22.0" prefWidth="150.0" />
-      <Button fx:id="bt_last" layoutX="251.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#lastRegistry" prefHeight="28.0" prefWidth="66.0" styleClass="boton" stylesheets="@estilo.css" text="Último" />
-      <Button fx:id="bt_next" layoutX="170.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#nextRegistry" prefHeight="22.0" prefWidth="75.0" styleClass="boton" stylesheets="@estilo.css" text="Siguiente" />
-      <Button fx:id="bt_previous" layoutX="96.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#previousRegistry" prefHeight="22.0" prefWidth="66.0" styleClass="boton" stylesheets="@estilo.css" text="Anterior">
+      <Button fx:id="bt_last" layoutX="277.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#lastRegistry" prefHeight="28.0" prefWidth="66.0" styleClass="boton" stylesheets="@estilo.css" text="Último" />
+      <Button fx:id="bt_next" layoutX="179.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#nextRegistry" prefHeight="29.0" prefWidth="88.0" styleClass="boton" stylesheets="@estilo.css" text="Siguiente" />
+      <Button fx:id="bt_previous" layoutX="96.0" layoutY="384.0" mnemonicParsing="false" onMouseClicked="#previousRegistry" prefHeight="29.0" prefWidth="76.0" styleClass="boton" stylesheets="@estilo.css" text="Anterior">
          <font>
             <Font name="Ebrima" size="11.0" />
          </font></Button>
@@ -47,5 +47,10 @@
       <Label layoutX="26.0" layoutY="332.0" text="Jefe" />
       <TextField fx:id="tf_jefe" alignment="CENTER" layoutX="164.0" layoutY="328.0" prefHeight="22.0" prefWidth="150.0" />
       <Line endX="342.0" layoutY="78.0" startX="20.0" />
+      <Hyperlink fx:id="id_salir" alignment="CENTER" contentDisplay="CENTER" layoutX="266.0" layoutY="426.0" mnemonicParsing="true" onAction="#salir" prefHeight="25.0" prefWidth="76.0" text="_Salir" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Ebrima Bold" size="13.0" />
+         </font>
+      </Hyperlink>
    </children>
 </AnchorPane>
