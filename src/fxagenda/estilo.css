@@ -45,12 +45,18 @@ and open the template in the editor.
 
 .fondoAzul{
     -fx-background-color:#e8eaf6;
-     -fx-background-radius:8;
+     -fx-background-radius:1px;
 }
 .fondoRosa{
     -fx-background-color:#fce4ec;
-    -fx-background-radius:8;
+    -fx-background-radius:1px;
+    
 }
 .textoCentrado{
     -fx-alignment: center;
+}
+
+.disabledText:disabled{
+     -fx-opacity: 1.0; /* Muestra el texto deshabilitado con más claridad*/
+    -fx-background-radius:1px;
 }
